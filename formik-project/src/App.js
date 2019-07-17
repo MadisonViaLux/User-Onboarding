@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from './component/Form'
+import FormikFormCom from './component/Form'
 
 
 
@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
 
-      <Form />
+      <FormikFormCom />
       
     </div>
   );
