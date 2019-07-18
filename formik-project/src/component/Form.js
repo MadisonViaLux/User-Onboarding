@@ -7,34 +7,50 @@ import axios from 'axios'
 
 
 
-const FormCom = () => {
+const FormCom = ({touched, errors, values}) => {
 
     return(
         <div>
             <Form>
-                <Field 
-                type='text'
-                name='name'
-                placeholder='name'
-                />
+                <div>
+                    <Field 
+                    type='text'
+                    name='name'
+                    placeholder='name'
+                    />
+                    <p>{touched.name && errors.name}</p>
+                </div>
 
-                <Field 
-                type='text'
-                name='email'
-                placeholder='email'
-                />
+                <div>
+                    <Field 
+                    type='text'
+                    name='email'
+                    placeholder='email'
+                    />
 
-                <Field 
-                type='text'
-                name='password'
-                placeholder='password'
-                />
+                    <p>{touched.email && errors.email}</p>
+                </div>
 
-                <Field
-                type='checkbox'
-                name='checkbox'
-                />
+                <div>
+                    <Field 
+                    type='text'
+                    name='password'
+                    placeholder='password'
+                    />
+                    <p>{touched.password && errors.password}</p>
+                </div>
 
+                <div>
+                    <label>
+                        <Field
+                        type='checkbox'
+                        name='checkbox'
+                        checked={values.checkbox}
+                        />
+                    </label>
+                    
+                    <p>{touched.checkbox && errors.checkbox}</p>
+                </div>
                 <button>Submit!</button>
             </Form>
 
@@ -45,7 +61,7 @@ const FormCom = () => {
 
 const FormikFormCom = withFormik({
 
-    mapPropsToValues({name, email, password}){
+    mapPropsToValues(){
         return{
             name: '',
             email: '',
@@ -54,6 +70,26 @@ const FormikFormCom = withFormik({
         };
     },
 
+
+    handleSubmit(values, formikBag){
+        
+        console.log(values)
+        
+        axios
+        .post("https://reqres.in/api/users", values)
+        .then(res => {
+            console.log(res)
+            formikBag.resetForm()
+            window.alert(
+                "Form submitted " + res.data.name
+              );
+        })
+        
+    },
+
+
+
+
     validationSchema: Yup.object().shape({
 
         name: Yup.string().min(5, 'Must be Five or more figures').required('Name must be entered'),
@@ -61,6 +97,7 @@ const FormikFormCom = withFormik({
         password: Yup.string().min(8, 'Password must be 8 figures or more').max(125, 'stop..').required('Password must be entered'),
         checkbox: Yup.boolean().oneOf([true], 'Please Check').required()
     })
+
 })(FormCom)
 
 
