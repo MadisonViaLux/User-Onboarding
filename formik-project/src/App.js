@@ -1,7 +1,7 @@
 import React from 'react';
 import FormikFormCom from './component/Form'
 
-
+import './App.css'
 
 
 
@@ -9,6 +9,8 @@ import FormikFormCom from './component/Form'
 function App() {
   return (
     <div className="App">
+
+      <h1 className='glow'>Hello There</h1>
 
       <FormikFormCom />
       
